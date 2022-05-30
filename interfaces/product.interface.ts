@@ -32,4 +32,5 @@ export interface ProductModel {
     reviewCount: number;
     reviewsAvg?: number;
     advantages: string;
+    disadvantages: string;
 }
