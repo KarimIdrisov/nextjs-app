@@ -1,6 +1,6 @@
-import { TopPageComponentProps } from './TopPageComponent.props';
-import styles from './TopPageComponent.module.css';
-import cn from 'classnames';
+import {TopPageComponentProps} from "./TopPageComponent.props";
+import styles from "./TopPageComponent.module.css";
+
 import {
     Advantages,
     HhData,
@@ -9,25 +9,30 @@ import {
     Product,
     Sort,
     Tag,
-} from '../../components';
-import { TopLevelCategory } from '../../interfaces/page.interface';
-import { SortEnum } from '../../components/Sort/Sort.props';
-import { useReducer } from 'react';
-import { sortReducer } from './sort.reducer';
+} from "../../components";
+import {TopLevelCategory} from "../../interfaces/page.interface";
+import {SortEnum} from "../../components/Sort/Sort.props";
+import {useEffect, useReducer} from "react";
+import {sortReducer} from "./sort.reducer";
+import {useScrollY} from "../../hooks/useScrollY";
 
 export const TopPageComponent = ({
-    page,
-    products,
-    firstCategory,
-}: TopPageComponentProps): JSX.Element => {
-    const [{ products: sortedProducts, sort }, dispatchSort] = useReducer(
+                                     page,
+                                     products,
+                                     firstCategory,
+                                 }: TopPageComponentProps): JSX.Element => {
+    const [{products: sortedProducts, sort}, dispatchSort] = useReducer(
         sortReducer,
-        { sort: SortEnum.Rating, products }
+        {sort: SortEnum.Rating, products}
     );
 
     const setSort = (sort: SortEnum) => {
-        dispatchSort({ type: sort });
+        dispatchSort({type: sort});
     };
+
+    useEffect(() => {
+        dispatchSort({ type: 'reset', initialState: products});
+    }, [products]);
 
     return (
         <div className={styles.wrapper}>
@@ -38,13 +43,11 @@ export const TopPageComponent = ({
                         {sortedProducts.length}
                     </Tag>
                 )}
-                <Sort sort={sort} setSort={setSort} />
+                <Sort sort={sort} setSort={setSort}/>
             </div>
             <div>
                 {sortedProducts &&
-                    sortedProducts.map(p => (
-                        <Product key={p._id} product={p} />
-                    ))}
+                    sortedProducts.map((p) => <Product key={p._id} product={p} layout />)}
             </div>
             <div className={styles.hhTitle}>
                 <Htag tag="h2">Вакансии - {page.category}</Htag>
@@ -59,17 +62,17 @@ export const TopPageComponent = ({
             {page.advantages && page.advantages.length > 0 && (
                 <>
                     <Htag tag="h2">Преимущества</Htag>
-                    <Advantages advantages={page.advantages} />
+                    <Advantages advantages={page.advantages}/>
                 </>
             )}
             {page.seoText && (
                 <div
                     className={styles.seo}
-                    dangerouslySetInnerHTML={{ __html: page.seoText }}
+                    dangerouslySetInnerHTML={{__html: page.seoText}}
                 />
             )}
             <Htag tag="h2">Получаемые навыки</Htag>
-            {page.tags.map(t => (
+            {page.tags.map((t) => (
                 <Tag key={t} color="primary">
                     {t}
                 </Tag>

@@ -24,6 +24,7 @@
     .wrapper {
         grid-template-areas: "header" "body" "footer";
         grid-template-columns: minmax(320px, 1fr);
+        gap: 10px;
     }
     .body {
         padding: 15px;
