@@ -9,7 +9,6 @@
 
 .header {
 	display: none;
-	grid-area: header;
 }
 
 .sidebar {
@@ -39,9 +38,5 @@
 
 	.sidebar {
 		display: none !important;
-	}
-
-	.header {
-		display: block;
 	}
 }
