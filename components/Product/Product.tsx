@@ -28,6 +28,7 @@ export const Product = motion(forwardRef(({
       behavior: "smooth",
       block: "start",
     });
+    reviewRef.current?.focus();
   };
 
   const variants = {
@@ -56,17 +57,23 @@ export const Product = motion(forwardRef(({
         </div>
         <div className={styles.title}>{product.title}</div>
         <div className={styles.price}>
-          {priceRu(product.price)}
+          <span>
+            <span className='visuallyHidden'>Цена</span>
+            {priceRu(product.price)}
+          </span>
           {product.oldPrice && (
             <Tag className={styles.oldPrice} color="green">
+              <span className='visuallyHidden'>Скидка</span>
               {priceRu(product.price - product.oldPrice)}
             </Tag>
           )}
         </div>
         <div className={styles.credit}>
+          <span className='visuallyHidden'>Кредит</span>
           {priceRu(product.credit)}/<span className={styles.month}>мес</span>
         </div>
         <div className={styles.rate}>
+          <span className='visuallyHidden'>{'рейтинг' + (product.reviewsAvg ?? product.initialRating)}</span>
           <Rating rating={product.reviewsAvg ?? product.initialRating} />
         </div>
         <div className={styles.tags}>
@@ -76,8 +83,8 @@ export const Product = motion(forwardRef(({
             </Tag>
           ))}
         </div>
-        <div className={styles.priceTitle}>цена</div>
-        <div className={styles.creditTitle}>кредит</div>
+        <div className={styles.priceTitle} aria-hidden={true}>цена</div>
+        <div className={styles.creditTitle} aria-hidden={true}>кредит</div>
         <div className={styles.rateTitle}>
           <a href="#ref" onClick={() => scrollToReview()}>
             {product.reviewCount}{" "}
@@ -90,7 +97,7 @@ export const Product = motion(forwardRef(({
           {product.characteristics.map((c) => (
             <div className={styles.characteristic} key={c.name}>
               <span className={styles.characteristicName}>{c.name}</span>
-              <span className={styles.characteristicDots}></span>
+              <span className={styles.characteristicDots} />
               <span className={styles.characteristicValue}>{c.value}</span>
             </div>
           ))}
@@ -117,6 +124,7 @@ export const Product = motion(forwardRef(({
             appearance="ghost"
             arrow={isReviewOpened ? "down" : "right"}
             onClick={() => setIsReviewOpened(!isReviewOpened)}
+            aria-expanded={isReviewOpened}
           >
             Читать отзывы
           </Button>
@@ -131,6 +139,7 @@ export const Product = motion(forwardRef(({
             ref={reviewRef}
             color="blue"
             className={cn(styles.reviews)}
+            tabIndex={isReviewOpened ? 0 : -1}
         >
           {product.reviews &&
               product.reviews.map((r) => (
@@ -139,7 +148,7 @@ export const Product = motion(forwardRef(({
                     <Divider />
                   </div>
               ))}
-          <ReviewForm productId={product._id} />
+          <ReviewForm productId={product._id} isOpened={isReviewOpened} />
         </Card>
       </motion.div>
     </div>

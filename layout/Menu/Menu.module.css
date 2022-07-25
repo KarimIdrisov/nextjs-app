@@ -9,6 +9,11 @@
 	line-height: 25px;
 }
 
+.firstLevelList {
+	padding: 0;
+	list-style: none;
+}
+
 .firstLevelActive {
 	color: var(--primary);
 }
@@ -26,18 +31,24 @@
 }
 
 .secondBlock {
-	padding-left: 32px;
+	padding: 0 0 0 32px;
 	border-left: 1px solid #DFDFDF;
 	margin-top: 15px;
 	margin-left: 12px;
+	list-style: none;
 }
 
 .secondLevelBlock {
 	overflow: hidden;
+	padding: 0;
+	list-style: none;
 }
 
 .secondLevel {
+	padding: 0;
+	border: none;
 	margin-bottom: 10px;
+	background: none;
 	color: var(--gray-dark);
 	cursor: pointer;
 	font-size: 12px;
