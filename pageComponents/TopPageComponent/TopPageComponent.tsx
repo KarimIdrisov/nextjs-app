@@ -14,7 +14,6 @@ import {TopLevelCategory} from "../../interfaces/page.interface";
 import {SortEnum} from "../../components/Sort/Sort.props";
 import {useEffect, useReducer} from "react";
 import {sortReducer} from "./sort.reducer";
-import {useScrollY} from "../../hooks/useScrollY";
 import {useReducedMotion} from "framer-motion";
 
 export const TopPageComponent = ({
@@ -28,8 +27,6 @@ export const TopPageComponent = ({
     );
 
     const shouldReduceMotion = useReducedMotion();
-
-
 
     const setSort = (sort: SortEnum) => {
         dispatchSort({type: sort});

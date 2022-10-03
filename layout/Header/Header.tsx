@@ -6,16 +6,14 @@ import {ButtonIcon} from "../../components/ButtonIcon/ButtonIcon";
 import { motion } from 'framer-motion';
 import {Sidebar} from "../Sidebar/Sidebar";
 import {useEffect, useState} from "react";
-import { useRouter } from 'next/router';
 
 export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const router = useRouter();
 
     useEffect(() => {
         setIsOpen(false);
-    }, [router]);
+    }, []);
 
     const variants = {
         opened: {
